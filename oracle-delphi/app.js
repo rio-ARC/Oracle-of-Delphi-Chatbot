@@ -1,50 +1,62 @@
 /**
- * Oracle of Delphi — Interaction Logic
+ * Oracle of Delphi — API Integration
  */
 
-// Demo response
-const DEMO_RESPONSE = "The path unfolds in shadows and light, entwined with choice and chance. Persevere, and the threads of fate may align to your purpose...";
+const API_URL = 'http://localhost:8000/chat';
 
-// DOM elements
+let sessionId = sessionStorage.getItem('oracle_session') || 'session-' + Date.now();
+sessionStorage.setItem('oracle_session', sessionId);
+
 const input = document.getElementById('input');
 const submitBtn = document.getElementById('submitBtn');
 const questionEl = document.getElementById('question');
 const responseEl = document.getElementById('response');
+const parchment = document.querySelector('.parchment');
 
-// Consult the Oracle
-function consult() {
+async function consult() {
     const text = input.value.trim();
     if (!text) {
         input.focus();
         return;
     }
 
-    // Format question
     const question = text.endsWith('?') ? text : text + '?';
     questionEl.textContent = question;
 
-    // Disable inputs
     input.disabled = true;
     submitBtn.disabled = true;
     responseEl.innerHTML = '<p>...</p>';
     responseEl.classList.remove('fade-in');
+    parchment.classList.add('contemplating');
 
-    // Simulate oracle thinking
-    setTimeout(() => {
-        responseEl.innerHTML = `<p>${DEMO_RESPONSE}</p>`;
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: question, session_id: sessionId })
+        });
+
+        if (!response.ok) throw new Error('Oracle unavailable');
+
+        const data = await response.json();
+        responseEl.innerHTML = `<p>${data.response}</p>`;
         responseEl.classList.add('fade-in');
+
+    } catch (error) {
+        responseEl.innerHTML = '<p>The mists obscure the Oracle\'s vision. Try again...</p>';
+        responseEl.classList.add('fade-in');
+    } finally {
+        parchment.classList.remove('contemplating');
         input.value = '';
         input.disabled = false;
         submitBtn.disabled = false;
         input.focus();
-    }, 1200);
+    }
 }
 
-// Event listeners
 submitBtn.addEventListener('click', consult);
 input.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') consult();
 });
 
-// Focus on load
 window.addEventListener('load', () => input.focus());

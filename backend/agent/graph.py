@@ -37,7 +37,7 @@ def create_agent():
     if not api_key:
         raise ValueError("GROQ_API_KEY not found in environment variables.")
     
-    llm = ChatGroq(model="llama-3.1-70b-versatile", temperature=0.7, api_key=api_key)
+    llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0.7, api_key=api_key)
     
     def call_model(state: AgentState) -> dict:
         messages = state["messages"]

@@ -1,4 +1,4 @@
-# Oracle of Delphi 🏛️
+# Oracle of Delphi 🏛️: Chatbot
 
 An AI-powered oracle that speaks in prophecies, built with LangGraph, FastAPI, and vanilla JavaScript. Features ritualized response timing and an immersive Greek mythology theme.
 

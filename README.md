@@ -2,7 +2,9 @@
 
 An AI-powered oracle that speaks in prophecies, built with LangGraph, FastAPI, and vanilla JavaScript. Features ritualized response timing and an immersive Greek mythology theme.
 
-**Live Demo:** [oracle-of-delphi.vercel.app](https://oracle-of-delphi.vercel.app)
+**🔗 Live Demo:** [oracle-of-delphi-chatbot.vercel.app](https://oracle-of-delphi-chatbot.vercel.app/)
+
+**⚙️ Backend API:** [oracle-delphi-api.onrender.com](https://oracle-delphi-api.onrender.com)
 
 ---
 
